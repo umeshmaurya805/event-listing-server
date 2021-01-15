@@ -4,14 +4,18 @@ const jwt=require("jsonwebtoken")
 const Register = async (req,res) => {
     try {
         const { name, email, password } = req.body;
-        const hash = bcrypt.hashSync(password, saltRounds=10);
-        const UsersData = await new Users({ name, email, password:hash }).save();
-        if (UsersData)
-            res.json("Added successfully");
-        else
-            res.json("Error occured")
+        const hash = bcrypt.hashSync(password, saltRounds = 10);
+        const loginData = await Users.findOne({ email });
+        if (!loginData) {
+            const UsersData = await new Users({ name, email, password: hash }).save();
+            if (UsersData)
+                res.status(200).json("Registration successfull");
+        } else {
+            res.status(203).json("Email Already exists");
+        }
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(404).json("Error occured")
     }
 
 }
@@ -28,11 +32,14 @@ const Login = async (req,res) => {
                     name:users.name,
                 }, '$event$', { expiresIn: '1h' });
                 const {name}=jwt.verify(token, '$event$')
-                res.json({token,status:'logged in',name,email});
+                res.status(200).json({token,status:'logged in',name,email});
+            }
+            else {
+                res.status(404).send("user not found")
             }
         }
         else {
-            res.json("user not found")
+            res.status(404).send("user not found")
         }
 
     } catch (error) {
