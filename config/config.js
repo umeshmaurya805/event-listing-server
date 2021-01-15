@@ -1,0 +1,5 @@
+const MOGOURI=""
+
+module.exports = {
+    
+}
