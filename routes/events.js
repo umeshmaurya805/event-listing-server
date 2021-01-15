@@ -13,8 +13,8 @@ var storage = multer.diskStorage({
    
   var upload = multer({ storage: storage })
 const { allEvents,addEvent } = require('../controllers/EventController');
-router.get('/all-events',check_auth, allEvents);
-router.post('/add-new-event', upload.single('image'), addEvent);
+router.get('/all-events', allEvents);
+router.post('/add-new-event', [check_auth,upload.single('image')], addEvent);
 
 //users
 const { Login, Register } = require('../controllers/UserController');
