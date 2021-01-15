@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 mongoose
   .connect(
     "mongodb+srv://umeshmaurya805:mauryakbc@cluster0.kjj6w.mongodb.net/test",
