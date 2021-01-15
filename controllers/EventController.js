@@ -6,9 +6,9 @@ const addEvent = async (req, res) => {
         console.log("environemtnt", process.env.NodeEnv)
         
         if(process.env.NodeEnv!=="production")
-           var  image = `http://localhost:8000/uploads/${req.filename}`
+           var  image = `http://localhost:8000/uploads/${req.file.originalname}`
         else
-           var image = `https://event-listing-server.herokuapp.com/${req.filename}`
+           var image = `https://event-listing-server.herokuapp.com/${req.file.originalname}`
         const events = await new Event({ name, description, datetime, organiser, image }).save();
         console.log(events)
         if (events)
