@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 mongoose
   .connect(
-    "mongodb+srv://umeshmaurya805:mauryakbc@cluster0.kjj6w.mongodb.net/test",
+    "mongodb+srv://umeshmaurya805:mauryakbc@cluster0.kjj6w.mongodb.net/test?authSource=admin&replicaSet=atlas-113yba-shard-0&readPreference=primary&ssl=true",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
