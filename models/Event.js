@@ -10,27 +10,20 @@ var EventSchema = new mongoose.Schema({
         // required:true,
 
     },
-    date: {
+    datetime: {
         type: Date,
         // required:true,
 
     },
-    time: {
+    organiser: {
         type:String,
-    },
-    venue: {
-        type:String
     },
     image: {
         type: String,
         required:true,
 
     },
-    peopleCount: {
-        type: Number, 
-        // required:true,
-
-    }
+ 
 });
  
 module.exports = mongoose.model("Event", EventSchema);

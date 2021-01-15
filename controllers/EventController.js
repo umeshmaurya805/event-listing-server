@@ -1,11 +1,15 @@
 const Event=require('../models/Event')
-
 const addEvent = async (req, res) => {
     try {
-        const { name, description, date, peopleCount } = req.body;
+        const { name, description, date } = req.body;
         console.log(req.file)
-        const image=`http://localhost:8000/uploads/${req.filename}`
+        console.log("environemtnt",process.env.NodeEnv)
+        if(process.env.NodeEnv!=="production")
+            const image = `http://localhost:8000/uploads/${req.filename}`
+        else
+        const image = `https://event-listing-server.herokuapp.com/${req.filename}`
         const events = await new Event({ name, description, date, peopleCount, image }).save();
+        console.log(events)
         if (events)
              res.status(200).json('Added successfully');
     } catch (error) {
