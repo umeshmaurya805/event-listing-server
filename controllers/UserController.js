@@ -1,9 +1,15 @@
 const bcrypt = require('bcrypt');
-const Users=require('../models/Users')
-const jwt=require("jsonwebtoken")
+const Users = require('../models/Users');
+const jwt = require("jsonwebtoken");
+const { check, validationResult } = require('express-validator');
+
 const Register = async (req,res) => {
     try {
         const { name, email, password } = req.body;
+        const errors = validationResult(req)
+        console.log(errors)
+        if (!errors.isEmpty()) 
+           return res.status(422).json({ errors: errors.array() })
         const hash = bcrypt.hashSync(password, saltRounds = 10);
         const loginData = await Users.findOne({ email });
         if (!loginData) {
@@ -23,6 +29,10 @@ const Register = async (req,res) => {
 const Login = async (req,res) => {
     try {
         const { email, password } = req.body;
+        const errors = validationResult(req)
+        console.log(errors)
+        if (!errors.isEmpty()) 
+           return res.status(422).json({ errors: errors.array() })
         const users = await Users.findOne({ email });
         if (users) {
           const password_check= bcrypt.compareSync(password, users.password); // true
